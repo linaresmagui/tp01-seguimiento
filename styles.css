@@ -1,0 +1,380 @@
+/* ==========================================================
+   1. TIPOGRAFÍAS (Google Fonts)
+   Si no hay internet, el navegador usa system-ui automáticamente.
+   ========================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap");
+
+/* ==========================================================
+   2. VARIABLES (paleta, tipografías, medidas)
+   Si cambiás un valor acá, cambia en toda la página.
+   ========================================================== */
+:root {
+  /* Colores principales */
+  --color-principal: #7C3AED;
+  --acento-docente: #7C3AED;
+  --acento-preceptor: #2563EB;
+  --acento-directivo: #64748B;
+  --acento-alumno: #15803D;
+  --acento: var(--color-principal); /* acento actual: cada panel lo redefine */
+
+  /* Fondos, textos y bordes */
+  --color-fondo: #F7F6FB;
+  --color-tarjeta: #FFFFFF;
+  --color-texto: #1F2937;
+  --color-texto-suave: #6B7280;
+  --color-borde: #E5E7EB;
+
+  /* Avisos, alertas y notas bajas */
+  --color-peligro: #DC2626;
+  --color-aviso-fondo: #FEF3C7;
+  --color-aviso-texto: #92400E;
+  --color-alerta: #F59E0B;
+  --color-alerta-fondo: #FFFBEB;
+
+  /* Tipografías */
+  --fuente-titulos: "Poppins", system-ui, sans-serif;
+  --fuente-texto: "Inter", system-ui, sans-serif;
+
+  /* Formas y sombras */
+  --radio: 14px;
+  --radio-chico: 8px;
+  --sombra-suave: 0 4px 14px rgba(17, 24, 39, 0.08);
+  --sombra-elevada: 0 8px 20px rgba(17, 24, 39, 0.16);
+}
+
+/* ==========================================================
+   3. BASE
+   ========================================================== */
+* { box-sizing: border-box; }
+
+/* Importante: sin esta regla, los paneles con display:grid
+   ignorarían el atributo "hidden" y se verían siempre. */
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  font-family: var(--fuente-texto);
+  color: var(--color-texto);
+  background: var(--color-fondo);
+  line-height: 1.5;
+}
+
+h1, h2, h3 { font-family: var(--fuente-titulos); margin: 0; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.1rem; margin-top: 0.5rem; }
+
+main { max-width: 1100px; margin: 0 auto; padding: 1rem; }
+
+/* ==========================================================
+   4. ENCABEZADO
+   ========================================================== */
+#encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 0.9rem 1rem;
+  background: var(--color-principal);
+  color: #fff;
+  box-shadow: var(--sombra-suave);
+}
+#encabezado h1 { font-size: 1.2rem; }
+#encabezado h1::before { content: "🎓 "; }
+#encabezado p { margin: 0; }
+
+/* ==========================================================
+   5. INICIO DE SESIÓN
+   ========================================================== */
+#pantalla-inicio-sesion {
+  max-width: 420px;
+  margin: 1.5rem auto;
+  display: grid;
+  gap: 1rem;
+}
+#pantalla-inicio-sesion h2 { text-align: center; }
+#pantalla-inicio-sesion h2::before { content: "🔐 "; }
+
+#aviso-simulacion {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background: var(--color-aviso-fondo);
+  color: var(--color-aviso-texto);
+  border-left: 4px solid var(--color-alerta);
+  border-radius: var(--radio-chico);
+  font-weight: 500;
+}
+#aviso-simulacion::before { content: "⚠️ "; }
+
+#mensaje-inicio-sesion {
+  margin: 0;
+  min-height: 1.5em;
+  text-align: center;
+  color: var(--color-peligro);
+  font-weight: 500;
+}
+
+/* ==========================================================
+   6. FORMULARIOS (tarjetas)
+   ========================================================== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  background: var(--color-tarjeta);
+  border-radius: var(--radio);
+  border-top: 4px solid var(--acento); /* el color indica el rol */
+  box-shadow: var(--sombra-suave);
+}
+label { font-weight: 500; font-size: 0.9rem; }
+
+input, select, textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  font: inherit;
+  color: inherit;
+  background: #fff;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-chico);
+}
+textarea { resize: vertical; }
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--acento) 30%, white);
+  border-color: var(--acento);
+}
+input[type="checkbox"] { width: 1.2rem; height: 1.2rem; accent-color: var(--acento); }
+
+/* ==========================================================
+   7. BOTONES
+   ========================================================== */
+button {
+  align-self: flex-start;
+  padding: 0.6rem 1.2rem;
+  font: 600 0.95rem var(--fuente-texto);
+  color: #fff;
+  background: var(--acento);
+  border: none;
+  border-radius: var(--radio-chico);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+button:hover {
+  background: color-mix(in srgb, var(--acento), black 18%);
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-elevada);
+}
+button:active { transform: translateY(0); box-shadow: none; }
+button:focus-visible { outline: 3px solid color-mix(in srgb, var(--acento) 40%, white); outline-offset: 2px; }
+
+/* Emojis como íconos */
+button[type="submit"]::before { content: "💾 "; }
+#formulario-inicio-sesion button::before { content: "🔑 "; }
+
+/* El botón Salir va sobre el encabezado violeta */
+#boton-salir::before { content: "🚪 "; }
+#boton-salir {
+  align-self: center;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+#boton-salir:hover { background: #fff; color: var(--color-principal); }
+
+/* ==========================================================
+   8. PANELES Y COLORES DE ACENTO POR ROL
+   ========================================================== */
+#panel-docente { --acento: var(--acento-docente); }
+#panel-preceptor { --acento: var(--acento-preceptor); }
+#panel-directivo { --acento: var(--acento-directivo); }
+#panel-alumno { --acento: var(--acento-alumno); }
+
+/* Mobile first: una sola columna */
+section[id^="panel-"] { display: grid; gap: 0.75rem; align-items: start; }
+section[id^="panel-"] h2 { color: var(--acento); }
+
+#panel-docente h2::before { content: "🧑‍🏫 "; }
+#panel-preceptor h2::before { content: "📋 "; }
+#panel-directivo h2::before { content: "📊 "; }
+#panel-alumno h2::before { content: "🎒 "; }
+
+#panel-docente h3:nth-of-type(1)::before { content: "📝 "; }
+#panel-docente h3:nth-of-type(2)::before { content: "📚 "; }
+#panel-docente h3:nth-of-type(3)::before { content: "💬 "; }
+#panel-directivo h3:nth-of-type(1)::before { content: "📈 "; }
+#panel-directivo h3:nth-of-type(2)::before { content: "🚨 "; }
+#panel-alumno h3:nth-of-type(1)::before { content: "📝 "; }
+#panel-alumno h3:nth-of-type(2)::before { content: "📅 "; }
+
+/* ==========================================================
+   9. LISTAS (cada elemento es una tarjeta)
+   ========================================================== */
+ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.75rem; }
+li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  background: var(--color-tarjeta);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-suave);
+}
+#lista-asistencia label { display: flex; align-items: center; gap: 0.6rem; width: 100%; cursor: pointer; }
+
+#resumen-general li:nth-child(1)::before { content: "👥"; }
+#resumen-general li:nth-child(2)::before { content: "📈"; }
+#resumen-general li:nth-child(3)::before { content: "✅"; }
+#resumen-general span { margin-left: auto; font-weight: 700; color: var(--acento); }
+
+/* Alertas con ✏️ */
+#lista-alertas li {
+  background: var(--color-alerta-fondo);
+  border-left: 4px solid var(--color-alerta);
+}
+#lista-alertas li::before { content: "✏️"; }
+
+/* ==========================================================
+   10. TABLAS (con deslizamiento lateral en el celular)
+   Como no hay un <div> alrededor, la tabla se muestra como bloque
+   con overflow-x: auto y así se desliza sin romper la página.
+   ========================================================== */
+table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--color-tarjeta);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-suave);
+}
+th, td { padding: 0.7rem 1rem; text-align: left; white-space: nowrap; }
+th {
+  font-family: var(--fuente-titulos);
+  font-size: 0.9rem;
+  background: color-mix(in srgb, var(--acento) 14%, white);
+  color: color-mix(in srgb, var(--acento), black 30%);
+}
+td { border-top: 1px solid var(--color-borde); }
+tbody tr:nth-child(even) { background: #FAFAFD; }
+tbody tr:hover { background: color-mix(in srgb, var(--acento) 8%, white); }
+
+/* Esquinas redondeadas */
+thead th:first-child { border-top-left-radius: var(--radio); }
+thead th:last-child { border-top-right-radius: var(--radio); }
+tbody tr:last-child td:first-child { border-bottom-left-radius: var(--radio); }
+tbody tr:last-child td:last-child { border-bottom-right-radius: var(--radio); }
+
+/* Clase que va a agregar JavaScript a las notas menores a 6 */
+.nota-baja { color: var(--color-peligro); font-weight: 700; }
+
+/* ==========================================================
+   11. ESCRITORIO / TABLET (desde 768 px): dos columnas
+   ========================================================== */
+@media (min-width: 768px) {
+  main { padding: 1.5rem; }
+  #encabezado { padding: 1rem 2rem; }
+
+  section[id^="panel-"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 1.5rem;
+  }
+  section[id^="panel-"] > h2 { grid-column: 1 / -1; grid-row: 1; }
+
+  /* Las tablas vuelven a ser tablas normales */
+  table { display: table; width: 100%; }
+  th, td { white-space: normal; }
+
+  /* Docente: dos formularios arriba, planilla abajo a todo el ancho */
+  #panel-docente h3:nth-of-type(1) { grid-column: 1; grid-row: 2; }
+  #formulario-notas { grid-column: 1; grid-row: 3; }
+  #panel-docente h3:nth-of-type(3) { grid-column: 2; grid-row: 2; }
+  #bloque-observaciones-docente { grid-column: 2; grid-row: 3; }
+  #panel-docente h3:nth-of-type(2) { grid-column: 1 / -1; grid-row: 4; }
+  #planilla-notas { grid-column: 1 / -1; grid-row: 5; }
+
+  /* Preceptor: formulario a todo el ancho, alumnos en dos columnas */
+  #formulario-asistencia { grid-column: 1 / -1; }
+  #lista-asistencia { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  /* Directivo: resumen a la izquierda, alertas a la derecha */
+  #panel-directivo h3:nth-of-type(1) { grid-column: 1; grid-row: 2; }
+  #resumen-general { grid-column: 1; grid-row: 3; }
+  #panel-directivo h3:nth-of-type(2) { grid-column: 2; grid-row: 2; }
+  #lista-alertas { grid-column: 2; grid-row: 3; }
+
+  /* Alumno: notas a la izquierda, asistencia a la derecha */
+  #panel-alumno h3:nth-of-type(1) { grid-column: 1; grid-row: 2; }
+  #tabla-mis-notas { grid-column: 1; grid-row: 3 / span 2; }
+  #panel-alumno h3:nth-of-type(2) { grid-column: 2; grid-row: 2; }
+  #panel-alumno > p { grid-column: 2; grid-row: 3; margin: 0; }
+  #tabla-mi-asistencia { grid-column: 2; grid-row: 4; }
+}
+
+/* Respeta a quienes prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  button { transition: none; }
+  button:hover { transform: none; }
+}
+
+/* ==========================================================
+   12. NOTAS DEL PANEL DOCENTE (mensajes, botones chicos, planilla)
+   ========================================================== */
+#mensaje-notas { margin: 0; min-height: 1.5em; font-weight: 500; }
+.mensaje-error { color: var(--color-peligro); }
+.mensaje-ok { color: var(--acento-alumno); }
+
+/* Botón gris para acciones secundarias (cancelar) */
+.boton-secundario { background: var(--color-texto-suave); }
+
+/* Botones chicos de Editar y Borrar dentro de la planilla */
+.boton-chico { padding: 0.2rem 0.6rem; font-size: 0.8rem; align-self: auto; }
+.boton-chico[data-accion="borrar"] { background: var(--color-peligro); }
+.boton-chico[data-accion="borrar"]:hover { background: color-mix(in srgb, var(--color-peligro), black 18%); }
+
+/* Cada nota dentro de la planilla */
+.celda-notas { min-width: 16rem; }
+.nota-item { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; padding: 0.25rem 0; }
+.nota-item + .nota-item { border-top: 1px dashed var(--color-borde); }
+
+/* ==========================================================
+   13. ASISTENCIA Y OBSERVACIONES
+   ========================================================== */
+#mensaje-asistencia,
+[id^="mensaje-observaciones-"] { margin: 0; min-height: 1.5em; font-weight: 500; }
+
+/* Botones P, A, T y J */
+#lista-asistencia li { flex-wrap: wrap; }
+.botones-asistencia { display: flex; gap: 0.4rem; margin-left: auto; }
+.boton-estado {
+  min-width: 2.4rem;
+  padding: 0.35rem 0.6rem;
+  align-self: auto;
+  color: var(--color-texto);
+  background: #fff;
+  border: 1px solid var(--color-borde);
+}
+.boton-estado:hover { background: #F3F4F6; box-shadow: none; }
+.boton-estado[aria-pressed="true"] { color: #fff; border-color: transparent; }
+.boton-estado[data-estado="P"][aria-pressed="true"] { background: var(--acento-alumno); }
+.boton-estado[data-estado="A"][aria-pressed="true"] { background: var(--color-peligro); }
+.boton-estado[data-estado="T"][aria-pressed="true"] { background: #B45309; }
+.boton-estado[data-estado="J"][aria-pressed="true"] { background: var(--acento-preceptor); }
+
+/* Observaciones */
+h4 { font-family: var(--fuente-titulos); margin: 0; }
+#panel-preceptor h3::before { content: "💬 "; }
+.bloque-observaciones { display: grid; gap: 0.75rem; align-items: start; }
+.lista-observaciones li { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+.observacion { width: 100%; padding: 0.4rem 0; }
+.observacion + .observacion { border-top: 1px dashed var(--color-borde); }
+.observacion p { margin: 0.2rem 0; overflow-wrap: anywhere; }
+.observacion small { color: var(--color-texto-suave); }
+.etiqueta-positiva { color: var(--acento-alumno); font-weight: 600; }
+.etiqueta-llamado { color: #B45309; font-weight: 600; }
+
+@media (min-width: 768px) {
+  #panel-preceptor h3,
+  #bloque-observaciones-preceptor { grid-column: 1 / -1; }
+  #bloque-observaciones-preceptor { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+}

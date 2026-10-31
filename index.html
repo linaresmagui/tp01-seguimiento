@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Seguimiento de alumnos</title>
+
+  <!-- Enlace a la hoja de estilos (todavía vacía) -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       ENCABEZADO
+       Empieza oculto: se va a mostrar recién cuando alguien inicie sesión.
+       ============================================================ -->
+  <header id="encabezado" hidden>
+    <h1>Seguimiento de alumnos</h1>
+    <p>
+      Usuario: <strong id="nombre-usuario"></strong>
+      (<span id="rol-usuario"></span>)
+    </p>
+    <button type="button" id="boton-salir">Salir</button>
+  </header>
+
+  <main>
+
+    <!-- ============================================================
+         PANTALLA DE INICIO DE SESIÓN
+         Es lo único que se ve al abrir la página.
+         ============================================================ -->
+    <section id="pantalla-inicio-sesion">
+      <h2>Iniciar sesión</h2>
+
+      <!-- Aviso visible: recuerda que es solo una simulación -->
+      <p id="aviso-simulacion">
+        Simulación didáctica: este inicio de sesión no es seguro. Usá solo datos ficticios.
+      </p>
+
+      <form id="formulario-inicio-sesion">
+        <label for="campo-usuario">Usuario</label>
+        <input type="text" id="campo-usuario" name="usuario" autocomplete="off" required>
+
+        <label for="campo-clave">Clave</label>
+        <input type="password" id="campo-clave" name="clave" autocomplete="off" required>
+
+        <button type="submit">Ingresar</button>
+      </form>
+
+      <!-- Acá JavaScript va a escribir los errores (por ejemplo, "clave incorrecta") -->
+      <p id="mensaje-inicio-sesion" role="alert"></p>
+    </section>
+
+
+    <!-- ============================================================
+         PANEL DOCENTE
+         Formulario de notas + planilla + formulario de observaciones.
+         ============================================================ -->
+    <section id="panel-docente" hidden>
+      <h2>Panel docente</h2>
+
+      <!-- Formulario para cargar una nota -->
+      <h3>Cargar nota</h3>
+      <form id="formulario-notas">
+        <label for="nota-alumno">Alumno</label>
+        <select id="nota-alumno" required>
+          <!-- Las opciones las va a generar JavaScript -->
+        </select>
+
+        <label for="nota-materia">Materia</label>
+        <input type="text" id="nota-materia" required>
+
+        <label for="nota-instancia">Instancia</label>
+        <select id="nota-instancia" required>
+          <option value="">Elegí una instancia</option>
+          <option value="Parcial 1">Parcial 1</option>
+          <option value="Parcial 2">Parcial 2</option>
+          <option value="Trabajo práctico">Trabajo práctico</option>
+          <option value="Recuperatorio">Recuperatorio</option>
+          <option value="Final">Final</option>
+        </select>
+
+        <label for="nota-valor">Nota (entero de 1 a 10)</label>
+        <input type="number" id="nota-valor" min="1" max="10" step="1" required>
+
+        <label for="nota-fecha">Fecha</label>
+        <input type="date" id="nota-fecha" required>
+
+        <!-- Id de la nota que se está editando (vacío si es una nota nueva) -->
+        <input type="hidden" id="nota-id">
+
+        <p id="mensaje-notas" role="alert"></p>
+
+        <button type="submit" id="boton-guardar-nota">Guardar nota</button>
+        <button type="button" id="boton-cancelar-edicion" class="boton-secundario" hidden>Cancelar edición</button>
+      </form>
+
+      <!-- Planilla con todas las notas cargadas -->
+      <h3>Planilla de notas</h3>
+      <table id="planilla-notas">
+        <thead>
+          <tr>
+            <th>Alumno</th>
+            <th>Notas</th>
+            <th>Promedio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Las filas las va a generar JavaScript -->
+        </tbody>
+      </table>
+
+      <!-- Formulario para escribir una observación sobre un alumno -->
+      <h3>Observaciones</h3>
+      <div id="bloque-observaciones-docente" class="bloque-observaciones">
+        <form id="formulario-observaciones-docente">
+          <label for="observacion-alumno-docente">Alumno</label>
+          <select id="observacion-alumno-docente" required>
+            <!-- Las opciones las va a generar JavaScript -->
+          </select>
+
+          <label for="observacion-tipo-docente">Tipo</label>
+          <select id="observacion-tipo-docente" required>
+            <option value="positiva">Positiva</option>
+            <option value="llamado">Llamado de atención</option>
+          </select>
+
+          <label for="observacion-texto-docente">Observación (10 a 300 caracteres)</label>
+          <textarea id="observacion-texto-docente" rows="3" maxlength="300" required></textarea>
+
+          <p id="mensaje-observaciones-docente" role="alert"></p>
+          <button type="submit">Guardar observación</button>
+        </form>
+
+        <!-- Observaciones de cada alumno (las genera JavaScript) -->
+        <ul id="lista-observaciones-docente" class="lista-observaciones"></ul>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         PANEL PRECEPTOR
+         Lista de alumnos para tomar asistencia en una fecha.
+         ============================================================ -->
+    <section id="panel-preceptor" hidden>
+      <h2>Panel preceptor</h2>
+
+      <form id="formulario-asistencia">
+        <label for="asistencia-fecha">Fecha</label>
+        <input type="date" id="asistencia-fecha" required>
+
+        <!-- Lista de alumnos con una casilla "Presente" cada uno -->
+        <ul id="lista-asistencia">
+          <!-- Los alumnos los va a generar JavaScript -->
+        </ul>
+
+        <p id="mensaje-asistencia" role="alert"></p>
+        <button type="submit">Guardar asistencia</button>
+      </form>
+
+      <h3>Observaciones</h3>
+      <div id="bloque-observaciones-preceptor" class="bloque-observaciones">
+        <form id="formulario-observaciones-preceptor">
+          <label for="observacion-alumno-preceptor">Alumno</label>
+          <select id="observacion-alumno-preceptor" required>
+            <!-- Las opciones las va a generar JavaScript -->
+          </select>
+
+          <label for="observacion-tipo-preceptor">Tipo</label>
+          <select id="observacion-tipo-preceptor" required>
+            <option value="positiva">Positiva</option>
+            <option value="llamado">Llamado de atención</option>
+          </select>
+
+          <label for="observacion-texto-preceptor">Observación (10 a 300 caracteres)</label>
+          <textarea id="observacion-texto-preceptor" rows="3" maxlength="300" required></textarea>
+
+          <p id="mensaje-observaciones-preceptor" role="alert"></p>
+          <button type="submit">Guardar observación</button>
+        </form>
+
+        <!-- Observaciones de cada alumno (las genera JavaScript) -->
+        <ul id="lista-observaciones-preceptor" class="lista-observaciones"></ul>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         PANEL DIRECTIVO
+         Resumen general y alertas.
+         ============================================================ -->
+    <section id="panel-directivo" hidden>
+      <h2>Panel directivo</h2>
+
+      <h3>Resumen</h3>
+      <ul id="resumen-general">
+        <li>Cantidad de alumnos: <span id="resumen-cantidad-alumnos"></span></li>
+        <li>Promedio general: <span id="resumen-promedio"></span></li>
+        <li>Asistencia general: <span id="resumen-asistencia"></span></li>
+      </ul>
+
+      <h3>Alertas</h3>
+      <ul id="lista-alertas">
+        <!-- Las alertas (notas bajas, muchas faltas) las va a generar JavaScript -->
+      </ul>
+    </section>
+
+
+    <!-- ============================================================
+         PANEL ALUMNO
+         El alumno ve solo sus propias notas y su asistencia.
+         ============================================================ -->
+    <section id="panel-alumno" hidden>
+      <h2>Panel alumno</h2>
+
+      <h3>Mis notas</h3>
+      <table id="tabla-mis-notas">
+        <thead>
+          <tr>
+            <th>Materia</th>
+            <th>Nota</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Las filas las va a generar JavaScript -->
+        </tbody>
+      </table>
+
+      <h3>Mi asistencia</h3>
+      <p>Porcentaje de asistencia: <strong id="mi-porcentaje-asistencia"></strong></p>
+      <table id="tabla-mi-asistencia">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Las filas las va a generar JavaScript -->
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- Enlace al JavaScript (todavía vacío). Va al final para que el HTML ya exista cuando se ejecute -->
+  <script src="app.js"></script>
+</body>
+</html>
